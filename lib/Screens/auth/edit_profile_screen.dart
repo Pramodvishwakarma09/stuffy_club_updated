@@ -7,7 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/profile_model.dart';
-import '../../view/bottombar_screen.dart';
+import '../bottombar_screen.dart';
 import 'package:get/get.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import '../../controller/profile_controller.dart';
@@ -22,10 +22,6 @@ class EditProfileScreen extends StatefulWidget {
 class _EditProfileScreenState extends State<EditProfileScreen> {
 
   ProfileController profileController=Get.put(ProfileController());
-
-
-
-  ProfileModel ? gatdata ;
 
   Future<ProfileModel> loadAssets() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -44,18 +40,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   return lm;
 }
 
-   Future? _future;
    final ImagePicker _picker = ImagePicker();
    File? _image;
 
-  // void _showDialog(BuildContext context) {
-  //   showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return MyDialogBox();
-  //     },
-  //   );
-  // }
 
 
   TextEditingController fullNameC = TextEditingController();
@@ -128,48 +115,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   }
 
-  void _showDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 199),
-          child: AlertDialog(
 
-            title:  Center(child: Text('Select')),
-            content:  Column(
-              children: [
-                InkWell(
-                  onTap: (){
-                    _imgFromCamera();
-                    Navigator.pop(context, true);
-
-                  },
-                  child: Container(
-                    height: 60, width: 300,
-                    child: Icon(Icons.camera_alt_outlined, size: 60,),
-                  ),
-                ),
-                InkWell(
-                  onTap: (){
-                    _imgFromGallery();
-                    Navigator.pop(context, true);
-                  },
-                  child: Container(
-                    height: 60, width: 300,
-                    child: Icon(Icons.photo, size: 60,),
-                  ),
-                )
-
-
-
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
 
   Future<Uint8List> testCompressFile(File file) async {
     var result = await FlutterImageCompress.compressWithFile(
@@ -204,12 +150,17 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         appBar: AppBar(
           elevation: 1,
           backgroundColor: HexColor('#FFFFFF'),
-          title: Text('Edit Profile',
-              style: TextStyle(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 18,
-                  fontFamily: 'Aboshi',
-                  color: HexColor('#333333'))),
+          title: Column(
+            children: [
+              Text('Edit Profile',
+                  style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 18,
+                      fontFamily: 'Aboshi',
+                      color: HexColor('#333333'))),
+
+            ],
+          ),
           leading: IconButton(icon: Icon(Icons.arrow_back_ios,
             color: HexColor('#000000'),),
             onPressed: (){
@@ -230,6 +181,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(height: 15,),
+                      Container(
+                        color: Colors.greenAccent,
+                          child: Text("sdfsdf",style: TextStyle(color: Colors.red),)),
                       Center(child: _image==null? Container(
                           height: 150,
                           width: 150,

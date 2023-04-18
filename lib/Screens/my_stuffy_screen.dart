@@ -5,8 +5,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:stuffy_club/view/product_deatails.dart';
-import 'package:stuffy_club/view/t_c_screen.dart';
+import 'product_deatails.dart';
+import 't_c_screen.dart';
 import '../models/pramod_model.dart';
 import 'add_stuffy_screen.dart';
 

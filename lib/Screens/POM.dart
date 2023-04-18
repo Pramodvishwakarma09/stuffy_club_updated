@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stuffy_club/view/t_c_screen.dart';
+import 't_c_screen.dart';
 
 class POPUPMENU extends StatefulWidget {
   const POPUPMENU({Key? key}) : super(key: key);

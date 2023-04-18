@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-import 'package:stuffy_club/view/my_stuffy_screen.dart';
-import '../models/add_galary.dart';
+import 'my_stuffy_screen.dart';
 import 'bottombar_screen.dart';
 
 class TestPage extends StatefulWidget {

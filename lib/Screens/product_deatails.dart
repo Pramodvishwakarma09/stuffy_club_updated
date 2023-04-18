@@ -2,7 +2,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:stuffy_club/view/add_stuffy_screen.dart';
+import 'package:stuffy_club/Screens/add_stuffy_screen.dart';
 import '../models/seeall_model.dart';
 
 class ProductDeatailsScreen extends StatefulWidget {

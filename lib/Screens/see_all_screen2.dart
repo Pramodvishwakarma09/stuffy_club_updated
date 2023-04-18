@@ -3,7 +3,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:http/http.dart' as http;
-import 'package:stuffy_club/view/product_deatails.dart';
+import 'product_deatails.dart';
 import '../models/seeall_model.dart';
 
 class SeeAllScreen2 extends StatefulWidget {

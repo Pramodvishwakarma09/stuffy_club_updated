@@ -978,7 +978,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (_) => const NotificationScreen()));
+                                  builder: (_) =>  NotificationScreen()));
                         },
                         child: SvgPicture.asset(
                             'asset/new icons/Notification.svg'),
@@ -991,7 +991,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           SharedPreferences prefs =
                           await SharedPreferences.getInstance();
                           prefs.setBool("isLoggedIn", false);
-                          Navigator.push(
+                          Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
                                   builder: (_) => const LoginScreen()));

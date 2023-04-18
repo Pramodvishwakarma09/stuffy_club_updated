@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:stuffy_club/Screens/WelComeScreens/Onboarding2.dart';
 
 import '../Auth/login_screen.dart';
+import 'Onboarding2.dart';
 
 
 

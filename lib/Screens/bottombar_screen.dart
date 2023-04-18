@@ -1,13 +1,11 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:stuffy_club/view/qr_screen2.dart';
-import 'package:stuffy_club/view/test.dart';
+import 'qr_screen2.dart';
+import 'test.dart';
 import 'home_screen.dart';
 import '../Screens/My_Sprites.dart';
-import 'qr_screen.dart';
 import '../Screens/Auth/profile_screen.dart';
 import 'my_stuffy_screen.dart';
 import 'dart:async';
@@ -21,10 +19,6 @@ class BottomBar_Screen extends StatefulWidget {
 }
 
 class _BottomBar_ScreenState extends State<BottomBar_Screen> {
-
-
-
-
 
   int _selectedIndex = 0;
   void _onItemTapped(int index) {

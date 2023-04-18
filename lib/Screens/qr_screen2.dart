@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
   import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-import 'package:stuffy_club/view/test.dart';
+import 'test.dart';
 import '../models/add_galary.dart';
 
 

@@ -113,63 +113,6 @@ class _AddStuffyScreenState extends State<AddStuffyScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // return Scaffold(
-    //     resizeToAvoidBottomInset: false,
-    //     appBar: AppBar(
-    //       title: Text("Multiple Image Picker Flutter"),
-    //       backgroundColor: Colors.deepPurpleAccent,
-    //     ),
-    //     body: Container(
-    //       alignment: Alignment.center,
-    //       padding: EdgeInsets.all(20),
-    //       child: Column(
-    //         children: [
-    //
-    //           //open button ----------------
-    //           // ElevatedButton(
-    //           //     onPressed: (){
-    //           //       openImages();
-    //           //     },
-    //           //     child: Text("Open Images")
-    //           // ),
-    //
-    //           Divider(),
-    //           Text("Picked Files:"),
-    //           Divider(),
-    //           SingleChildScrollView(
-    //             physics: ScrollPhysics(),
-    //             scrollDirection: Axis.horizontal,
-    //             child: Row(
-    //               children: [
-    //                 imagefiles != null?Wrap(
-    //                   children: imagefiles!.map((imageone){
-    //                     return Container(
-    //                         child:Card(
-    //                           child: Container(
-    //                             height: 70, width:70,
-    //                             child: Image.file(File(imageone.path)),
-    //                           ),
-    //                         )
-    //                     );
-    //                   }).toList(),
-    //                 ):
-    //                 Row(
-    //                   children: [
-    //                     Card(child: Container(  height: 70,width: 70, child:  Center(child: IconButton(onPressed: (){   openImages();}, icon: Icon(Icons.add),)),)),
-    //                   ],
-    //
-    //                 ),
-    //                 Card(child: Container(  height: 70,width: 70, child:  Center(child: IconButton(onPressed: (){   openImages();}, icon: Icon(Icons.add),)),)),
-    //               ],
-    //             ),
-    //           ),
-    //           ElevatedButton(onPressed: (){
-    //             uploadImage(context);
-    //           }, child: Text("upload"))
-    //         ],
-    //       ),
-    //     )
-    // );
     return Scaffold(
       backgroundColor: HexColor('#F5F5F5'),
       appBar: AppBar(
@@ -427,53 +370,6 @@ class _AddStuffyScreenState extends State<AddStuffyScreen> {
               ],
             ),
           ),
-
-          // Center(
-          //   child: _image == null
-          //       ? Container(
-          //           height: 150,
-          //           width: 150,
-          //           child: Center(
-          //             child: InkWell(
-          //               onTap: () {
-          //                 _imgFromCamera();
-          //                 // _openCamera(context);
-          //                 print('1223');
-          //               },
-          //               // child:Container(
-          //               child: Icon(Icons.camera_alt_outlined,
-          //                   color: HexColor('#FFFFFF')),
-          //             ),
-          //           ),
-          //           decoration: const BoxDecoration(
-          //             color: Colors.grey
-          //           )
-          //   )
-          //       : Container(
-          //           // padding: EdgeInsets.only(left:113,top:130,right:112,bottom:532),
-          //           height: 150,
-          //           width: 150,
-          //           child: Column(
-          //               mainAxisAlignment: MainAxisAlignment.center,
-          //               children: [
-          //                 InkWell(
-          //                   onTap: () {
-          //                     // _openCamera(context);
-          //                     print('Gallery_Image');
-          //                     _imgFromGallery();
-          //                   },
-          //                   child: Icon(Icons.camera_alt_outlined,
-          //                       color: HexColor('#FFFFFF')),
-          //                 ),
-          //               ]),
-          //           decoration: BoxDecoration(
-          //             image: DecorationImage(
-          //               fit: BoxFit.cover,
-          //               image: FileImage(_image!),
-          //             ),
-          //           )),
-          // ),
-          // SizedBox(height: 25),
           Container(
             margin: EdgeInsets.all(12),
             child: InkWell(

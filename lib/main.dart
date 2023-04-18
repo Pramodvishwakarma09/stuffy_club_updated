@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:core';
-import 'Screens/WelComeScreens/Splash_Screen.dart';
-
+import 'Screens/getstart_screens/Splash_Screen.dart';
 
 
 

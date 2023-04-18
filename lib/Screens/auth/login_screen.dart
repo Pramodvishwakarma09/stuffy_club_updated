@@ -6,7 +6,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stuffy_club/Screens/Auth/sign_up_screen.dart';
 import '../../FormTextField/Validation_Form_field.dart';
-import '../../view/bottombar_screen.dart';
+import '../bottombar_screen.dart';
 import 'forget_password_screen.dart';
 import 'package:http/http.dart' as http;
 

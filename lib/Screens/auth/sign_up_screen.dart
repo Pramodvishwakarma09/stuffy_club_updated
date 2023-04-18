@@ -7,8 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:stuffy_club/Screens/Auth/login_screen.dart';
 import '../../FormTextField/Validation_Form_field.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
-import '../../view/t_c_screen.dart';
+import '../t_c_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -452,40 +451,35 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                               //  <-- leading Checkbox
                                             }),
                                       ),
-                                      InkWell(
-                                        onTap: (){
-                                          Navigator.push(context, MaterialPageRoute(builder: (context) => TCScreen(),));
-                                        },
-                                        child: SizedBox(
-                                          width: MediaQuery.of(context).size.width * 0.7,
-                                          child: RichText(
-                                              text: TextSpan(
-                                                  text:
-                                                      'By creating an account, you aggree to our ',
+                                      SizedBox(
+                                        width: MediaQuery.of(context).size.width * 0.7,
+                                        child: RichText(
+                                            text: TextSpan(
+                                                text:
+                                                    'By creating an account, you aggree to our ',
+                                                style: TextStyle(
+                                                    color: HexColor('#FFFFFF'),
+                                                    fontFamily: 'Poppins',
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: 14),
+                                                children: <InlineSpan>[
+                                              TextSpan(
+                                                  text: 'Terms & Conditions',
                                                   style: TextStyle(
-                                                      color: HexColor('#FFFFFF'),
+                                                      color:
+                                                          HexColor('#ED1D22'),
                                                       fontFamily: 'Poppins',
-                                                      fontWeight: FontWeight.w400,
+                                                      fontWeight:
+                                                          FontWeight.w700,
                                                       fontSize: 14),
-                                                  children: <InlineSpan>[
-                                                TextSpan(
-                                                    text: 'Terms & Conditions',
-                                                    style: TextStyle(
-                                                        color:
-                                                            HexColor('#ED1D22'),
-                                                        fontFamily: 'Poppins',
-                                                        fontWeight:
-                                                            FontWeight.w700,
-                                                        fontSize: 14),
-                                                    recognizer:
-                                                        TapGestureRecognizer()
-                                                          ..onTap = () {
-                                                      Navigator.push(context, MaterialPageRoute(builder: (context) => TCScreen(),));
-                                                            print(
-                                                                'Terms of Service');
-                                                          }),
-                                              ])),
-                                        ),
+                                                  recognizer:
+                                                      TapGestureRecognizer()
+                                                        ..onTap = () {
+                                                    Navigator.push(context, MaterialPageRoute(builder: (context) => TCScreen(),));
+                                                          print(
+                                                              'Terms of Service');
+                                                        }),
+                                            ])),
                                       ),
                                     ],
                                   ),
@@ -507,7 +501,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         setState(() {});
                       }else{
                         Fluttertoast.showToast(
-                          msg: "Password & Confirm Passwoed",
+                          msg: "password and confirm password doesn't match",
                           toastLength: Toast.LENGTH_LONG,
                           //duration
                           gravity: ToastGravity.BOTTOM,

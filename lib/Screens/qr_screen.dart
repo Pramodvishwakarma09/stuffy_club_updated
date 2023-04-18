@@ -5,9 +5,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:stuffy_club/view/my_stuffy_screen.dart';
+import 'my_stuffy_screen.dart';
 import 'package:http/http.dart' as http;
 import '../models/add_galary.dart';
+import 'my_stuffy_screen.dart';
 
 class QRViewExample extends StatefulWidget {
   const QRViewExample({Key? key}) : super(key: key);

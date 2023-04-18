@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:stuffy_club/view/bottombar_screen.dart';
 
+import '../bottombar_screen.dart';
 import 'OnBoardingX.dart';
 
 class SplashScreen extends StatefulWidget {
