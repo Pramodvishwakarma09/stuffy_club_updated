@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "184353427821",
+    "project_id": "stuffyclub-83690",
+    "storage_bucket": "stuffyclub-83690.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:184353427821:android:0291e96349d5c600d54a64",
+        "android_client_info": {
+          "package_name": "com.example.stuffy_club"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "184353427821-q22m2tafjf91h0a42acdmgdjlm6qprsj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNPhm9kxic6PqhkFiWSZBz7J1YtbvGWhQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "184353427821-q22m2tafjf91h0a42acdmgdjlm6qprsj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
