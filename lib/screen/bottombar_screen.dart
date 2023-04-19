@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'My_Sprites.dart';
+import 'auth/profile_screen.dart';
 import 'qr_screen2.dart';
 import 'test.dart';
 import 'home_screen.dart';
-import '../Screens/Auth/profile_screen.dart';
 import 'my_stuffy_screen.dart';
 import 'dart:async';
 import 'package:flutter/services.dart';
@@ -29,7 +29,7 @@ class _BottomBar_ScreenState extends State<BottomBar_Screen> {
   static  List<Widget> _pages = <Widget>[
     HomeScreen(),
     MyStuffyScreen(),
-    QrScreen2(),
+    Container(),
     My_Spirit(),
     ProfileScreen(),
   ];
@@ -39,6 +39,7 @@ class _BottomBar_ScreenState extends State<BottomBar_Screen> {
 
   var _scanBarcode ;
   Future<void> scanQR() async {
+    print("@@@@@@@@@@@@@@@fgdsdsdgdgg@@@@@@@@@@@@@@@@@@");
     String barcodeScanRes;
     try {
       barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
@@ -53,6 +54,7 @@ class _BottomBar_ScreenState extends State<BottomBar_Screen> {
     setState(() {
       _scanBarcode = barcodeScanRes;
       var ok = jsonDecode(_scanBarcode);
+      print("@@@@@@@@@@@@@@@fgdsdsdgdgg@@@@@@@@@@@@@@@@@@$ok");
       var  product_id = ok["product_id"];
       Navigator.push(context, MaterialPageRoute(builder: (context) => TestPage(product_id2: "${product_id}"),));
     });
@@ -74,7 +76,7 @@ class _BottomBar_ScreenState extends State<BottomBar_Screen> {
           ),
 
           ElevatedButton(
-            onPressed: () => Navigator.of(context).pop(true),
+            onPressed: () => SystemNavigator.pop(),
             //return true when click on "Yes"
             child:Text('Yes'),
           ),

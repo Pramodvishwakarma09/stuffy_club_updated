@@ -3,7 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:stuffy_club/Screens/Auth/login_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../Auth/login_screen.dart';
 import 'Onboarding_3.dart';
 
 class Onboarding2 extends StatefulWidget {
@@ -102,7 +103,9 @@ class _Onboarding2State extends State<Onboarding2> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       TextButton(
-                        onPressed: () {
+                        onPressed: () async {
+                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                          prefs.setBool("isLogout", true);
                           Navigator.of(context)
                               .pushReplacement(createRoute(LoginScreen()));
                         },

@@ -1,43 +1,43 @@
 // To parse this JSON data, do
 //
-//     final profileModel = profileModelFromJson(jsonString);
+//     final myFriendGalleryModel = myFriendGalleryModelFromJson(jsonString);
 
 import 'dart:convert';
 
-ProfileModel profileModelFromJson(String str) => ProfileModel.fromJson(json.decode(str));
+MyFriendGalleryModel myFriendGalleryModelFromJson(String str) => MyFriendGalleryModel.fromJson(json.decode(str));
 
-String profileModelToJson(ProfileModel data) => json.encode(data.toJson());
+String myFriendGalleryModelToJson(MyFriendGalleryModel data) => json.encode(data.toJson());
 
-class ProfileModel {
-  ProfileModel({
-    required this.status,
-    required this.success,
+class MyFriendGalleryModel {
+  MyFriendGalleryModel({
     required this.message,
-    required this.data,
+    required this.response,
+    required this.success,
+    required this.status,
   });
 
-  int status;
-  bool success;
   String message;
-  List<Datum> data;
+  List<Response> response;
+  bool success;
+  int status;
 
-  factory ProfileModel.fromJson(Map<String, dynamic> json) => ProfileModel(
-    status: json["status"],
-    success: json["success"],
+  factory MyFriendGalleryModel.fromJson(Map<String, dynamic> json) => MyFriendGalleryModel(
     message: json["message"],
-    data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
+    response: List<Response>.from(json["response"].map((x) => Response.fromJson(x))),
+    success: json["success"],
+    status: json["status"],
   );
 
   Map<String, dynamic> toJson() => {
-    "status": status,
-    "success": success,
     "message": message,
-    "data": List<dynamic>.from(data.map((x) => x.toJson())),
+    "response": List<dynamic>.from(response.map((x) => x.toJson())),
+    "success": success,
+    "status": status,
   };
 }
 
-class Datum {
-  Datum({
+class Response {
+  Response({
     required this.id,
     required this.fullName,
     required this.phoneNumber,
@@ -52,7 +52,6 @@ class Datum {
     required this.status,
     required this.token,
     required this.actToken,
-    this.deviceToken,
     required this.blockDevice,
     required this.fcmToken,
     required this.deviceType,
@@ -74,14 +73,13 @@ class Datum {
   String status;
   String token;
   String actToken;
-  dynamic deviceToken;
   int blockDevice;
   String fcmToken;
   int deviceType;
   DateTime createdAt;
   DateTime updateAt;
 
-  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+  factory Response.fromJson(Map<String, dynamic> json) => Response(
     id: json["id"],
     fullName: json["full_name"],
     phoneNumber: json["phone_number"],
@@ -96,7 +94,6 @@ class Datum {
     status: json["status"],
     token: json["token"],
     actToken: json["act_token"],
-    deviceToken: json["device_token"],
     blockDevice: json["block_device"],
     fcmToken: json["fcm_token"],
     deviceType: json["device_type"],
@@ -119,7 +116,6 @@ class Datum {
     "status": status,
     "token": token,
     "act_token": actToken,
-    "device_token": deviceToken,
     "block_device": blockDevice,
     "fcm_token": fcmToken,
     "device_type": deviceType,

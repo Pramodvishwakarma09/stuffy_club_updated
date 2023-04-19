@@ -1,43 +1,43 @@
 // To parse this JSON data, do
 //
-//     final profileModel = profileModelFromJson(jsonString);
+//     final getAllFriendModel = getAllFriendModelFromJson(jsonString);
 
 import 'dart:convert';
 
-ProfileModel profileModelFromJson(String str) => ProfileModel.fromJson(json.decode(str));
+GetAllFriendModel getAllFriendModelFromJson(String str) => GetAllFriendModel.fromJson(json.decode(str));
 
-String profileModelToJson(ProfileModel data) => json.encode(data.toJson());
+String getAllFriendModelToJson(GetAllFriendModel data) => json.encode(data.toJson());
 
-class ProfileModel {
-  ProfileModel({
-    required this.status,
-    required this.success,
+class GetAllFriendModel {
+  GetAllFriendModel({
     required this.message,
-    required this.data,
+    required this.success,
+    required this.status,
+    required this.friendList,
   });
 
-  int status;
-  bool success;
   String message;
-  List<Datum> data;
+  bool success;
+  int status;
+  List<FriendList> friendList;
 
-  factory ProfileModel.fromJson(Map<String, dynamic> json) => ProfileModel(
-    status: json["status"],
-    success: json["success"],
+  factory GetAllFriendModel.fromJson(Map<String, dynamic> json) => GetAllFriendModel(
     message: json["message"],
-    data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
+    success: json["success"],
+    status: json["status"],
+    friendList: List<FriendList>.from(json["friend_list"].map((x) => FriendList.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
-    "status": status,
-    "success": success,
     "message": message,
-    "data": List<dynamic>.from(data.map((x) => x.toJson())),
+    "success": success,
+    "status": status,
+    "friend_list": List<dynamic>.from(friendList.map((x) => x.toJson())),
   };
 }
 
-class Datum {
-  Datum({
+class FriendList {
+  FriendList({
     required this.id,
     required this.fullName,
     required this.phoneNumber,
@@ -58,6 +58,7 @@ class Datum {
     required this.deviceType,
     required this.createdAt,
     required this.updateAt,
+    required this.isFriends,
   });
 
   int id;
@@ -80,8 +81,9 @@ class Datum {
   int deviceType;
   DateTime createdAt;
   DateTime updateAt;
+  int isFriends;
 
-  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+  factory FriendList.fromJson(Map<String, dynamic> json) => FriendList(
     id: json["id"],
     fullName: json["full_name"],
     phoneNumber: json["phone_number"],
@@ -102,6 +104,7 @@ class Datum {
     deviceType: json["device_type"],
     createdAt: DateTime.parse(json["created_at"]),
     updateAt: DateTime.parse(json["update_at"]),
+    isFriends: json["is_friends"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -125,5 +128,6 @@ class Datum {
     "device_type": deviceType,
     "created_at": createdAt.toIso8601String(),
     "update_at": updateAt.toIso8601String(),
+    "is_friends": isFriends,
   };
 }

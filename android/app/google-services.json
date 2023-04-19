@@ -1,33 +1,41 @@
 {
   "project_info": {
-    "project_number": "184353427821",
-    "project_id": "stuffyclub-83690",
-    "storage_bucket": "stuffyclub-83690.appspot.com"
+    "project_number": "478293264439",
+    "project_id": "stuffy-club-bbd7f",
+    "storage_bucket": "stuffy-club-bbd7f.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:184353427821:android:0291e96349d5c600d54a64",
+        "mobilesdk_app_id": "1:478293264439:android:9cbadbdea64db771c417b2",
         "android_client_info": {
           "package_name": "com.example.stuffy_club"
         }
       },
       "oauth_client": [
         {
-          "client_id": "184353427821-q22m2tafjf91h0a42acdmgdjlm6qprsj.apps.googleusercontent.com",
+          "client_id": "478293264439-qoeuh414f25ntfprb9pfdf9di808o15t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.stuffy_club",
+            "certificate_hash": "d28f4cc4e5e8d6dcee599b5c85714562c52195ff"
+          }
+        },
+        {
+          "client_id": "478293264439-htrljsiq026co1iks32s1g2jvi34gvbv.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDNPhm9kxic6PqhkFiWSZBz7J1YtbvGWhQ"
+          "current_key": "AIzaSyDkPdaQVtZlGN84LvlYCYsDvbVo19q2Snk"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "184353427821-q22m2tafjf91h0a42acdmgdjlm6qprsj.apps.googleusercontent.com",
+              "client_id": "478293264439-htrljsiq026co1iks32s1g2jvi34gvbv.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

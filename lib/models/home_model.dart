@@ -81,7 +81,7 @@ class Stuffy {
     required this.description,
     required this.status,
     required this.qrCode,
-    required this.qrCodeImage,
+    this.qrCodeImage,
     required this.createdAt,
     required this.exclusiveStuffy,
     required this.updatedAt,
@@ -95,11 +95,11 @@ class Stuffy {
   String description;
   String status;
   String qrCode;
-  String qrCodeImage;
+  String? qrCodeImage;
   DateTime createdAt;
   int exclusiveStuffy;
   DateTime updatedAt;
-  List<Images> images;
+  List<Image1> images;
 
   factory Stuffy.fromJson(Map<String, dynamic> json) => Stuffy(
     id: json["id"],
@@ -113,7 +113,7 @@ class Stuffy {
     createdAt: DateTime.parse(json["created_at"]),
     exclusiveStuffy: json["exclusive_stuffy"],
     updatedAt: DateTime.parse(json["Updated_at"]),
-    images: List<Images>.from(json["images"].map((x) => Images.fromJson(x))),
+    images: List<Image1>.from(json["images"].map((x) => Image1.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
@@ -132,14 +132,14 @@ class Stuffy {
   };
 }
 
-class Images {
-  Images({
+class Image1 {
+  Image1({
     required this.imageNames,
   });
 
   String imageNames;
 
-  factory Images.fromJson(Map<String, dynamic> json) => Images(
+  factory Image1.fromJson(Map<String, dynamic> json) => Image1(
     imageNames: json["Image_names"],
   );
 

@@ -1,15 +1,15 @@
+import '../../const.dart';
 
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
 import 'package:hexcolor/hexcolor.dart';
-
-import 'package:stuffy_club/Screens/Auth/login_screen.dart';
-import '../../FormTextField/Validation_Form_field.dart';
 import 'package:http/http.dart'as http;
+
+import '../../helper/Validation_Form_field.dart';
+import 'login_screen.dart';
 
 class Forget_Password extends StatefulWidget {
   const Forget_Password({Key? key}) : super(key: key);
@@ -32,7 +32,7 @@ class _Forget_PasswordState extends State<Forget_Password> {
 
     try {
       final response = await http.post(
-        Uri.parse("http://192.168.1.23:4000/forgotPassword"),
+        Uri.parse("${AppUrl.baseUrl}/forgotPassword"),
         body: {
           "email": email_AddressC.value.text,
         },

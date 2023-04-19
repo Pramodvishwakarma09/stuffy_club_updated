@@ -4,10 +4,10 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../controller/profile_controller.dart';
+import '../../const.dart';
 import '../../models/profile_model.dart';
+import '../plans2_screen.dart';
 import 'edit_profile_screen.dart';
-import 'package:get/get.dart';
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
@@ -18,21 +18,18 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
 
 
-
-
   Future<ProfileModel> loadAssets() async {
     print('stringValue.toString()');
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var stringValue = prefs.getInt('user_id');
 
     ProfileModel lm;
-    String url = "http://192.168.1.23:4000/myprofile";
+    String url = "${AppUrl.baseUrl}/myprofile";
+
     http.Response response =
         await http.post(Uri.parse(url), body: {"id": stringValue.toString() });
     Map<String, dynamic> jsonresponse = jsonDecode(response.body);
     lm = ProfileModel.fromJson(jsonresponse);
-
-    // var  free&paad = data
     return lm;
   }
 
@@ -82,16 +79,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Center(child: Container(
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                              fit: BoxFit.fill,
-                            image: NetworkImage("${snapshot.data!.profileImage}"),
+                      Center(child: ClipRRect(
+
+                        borderRadius: BorderRadius.circular(500.0),
+                        child: FadeInImage(
+                            height: 150,
+                            width: 150,
+                            fadeInDuration: const Duration(milliseconds: 500),
+                            fadeInCurve: Curves.easeInExpo,
+                            fadeOutCurve: Curves.easeOutExpo,
+                            placeholder: AssetImage(
+                              "asset/images/demoprofile.png",
                             ),
-                            color: Colors.grey,
-                          borderRadius: BorderRadius.circular(150)
-                        ),
-                        height: 120,width: 120,)),
+                            image: NetworkImage(
+                              snapshot.data!.data[0].profileImage,
+                            ),
+                            imageErrorBuilder: (context, error, stackTrace) {
+                              return Container(
+                                  child: Image.asset(
+                                      "asset/images/demoprofile.png"));
+                            },
+                            fit: BoxFit.cover),
+                      ),
+                      ),
                       SizedBox(height: 8,),
                       Center(
                         child: Text(
@@ -158,16 +168,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     ),
 
                                   ),
-                                  Text(
-                                    'Upgrade',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontFamily: 'Poppins',
-                                      fontWeight: FontWeight.w600,
-                                      decoration: TextDecoration.underline,
-                                      decorationColor: HexColor('#ED1D22'),
-                                      decorationThickness: 1.5,
-                                      color: HexColor('#ED1D22'),
+                                  InkWell(
+                                    onTap: (){
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => Plans1(),));
+                                    },
+                                    child: Text(
+                                      'Upgrade',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.w600,
+                                        decoration: TextDecoration.underline,
+                                        decorationColor: HexColor('#ED1D22'),
+                                        decorationThickness: 1.5,
+                                        color: HexColor('#ED1D22'),
+                                      ),
                                     ),
                                   ),
 

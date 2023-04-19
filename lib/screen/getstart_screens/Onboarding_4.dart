@@ -2,7 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:stuffy_club/Screens/Auth/login_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../Auth/login_screen.dart';
 
 
 class Onboarding_4 extends StatefulWidget {
@@ -116,7 +118,9 @@ class _Onboarding_4State extends State<Onboarding_4> {
                       SvgPicture.asset("asset/new icons/Group 1 (3).svg",),
 
                       InkWell(
-                        onTap: () {
+                        onTap: () async {
+                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                          prefs.setBool("isLogout", true);
                           Navigator.of(context).pushReplacement(createRoute(
                               LoginScreen())
                           );

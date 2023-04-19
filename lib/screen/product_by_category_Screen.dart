@@ -5,6 +5,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:http/http.dart' as http;
 import 'product_deatails.dart';
 import '../models/product_by_category_model.dart';
+import '../const.dart';
 
 class ProductByCategoryScreen extends StatefulWidget {
   final String cname;
@@ -21,7 +22,7 @@ class _ProductByCategoryState extends State<ProductByCategoryScreen> {
   Map? data;
   Future<ProductByCategoryModel> fechData() async {
     ProductByCategoryModel bm;
-    String url = "http://192.168.1.23:4000/getProductbycategory";
+    String url = "${AppUrl.baseUrl}/getProductbycategory";
     http.Response response = await http.post(Uri.parse(url),
       body: {
         'category_id': "${widget.category_id}"
@@ -64,107 +65,113 @@ class _ProductByCategoryState extends State<ProductByCategoryScreen> {
                   child: CircularProgressIndicator(),
                 );
               } else {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
+                if(snapshot.data!.data.length==0){
+                  return Center(child: Text("No Data Found"),);
+                }else{
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
 
-                    Expanded(
-                        child:GridView.builder(
-                            itemCount: snapshot.data!.data.length,
-                            padding: const EdgeInsets.only(top: 29),
-                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                childAspectRatio: 5 / 6,
-                                mainAxisExtent: 120,
-                                crossAxisCount: (Orientation.portrait ==
-                                    MediaQuery.of(context).orientation)
-                                    ? 3
-                                    : 0),
-                            itemBuilder: (context, index) {
-                              return InkWell(
-                                onTap: (){
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) =>
-                                      ProductDeatailsScreen(
-                                        imangNAME: "${snapshot.data!.data[index].qrCodeImage}",
-                                    name: "${snapshot.data!.data[index].productName}",
-                                    Description: "${snapshot.data!.data[index].description}",
-                                    satus: "${snapshot.data!.data[index].status}",
-                                    images:"${ "http://192.168.1.23:4000/product/" + snapshot.data!.data[index].images[0].imageNames.toString()}",
-                                    x:  snapshot.data!.data[index].images ,
-                                  ),));
+                      Expanded(
+                          child:GridView.builder(
+                              itemCount: snapshot.data!.data.length,
+                              padding: const EdgeInsets.only(top: 29),
+                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                  childAspectRatio: 5 / 6,
+                                  mainAxisExtent: 120,
+                                  crossAxisCount: (Orientation.portrait ==
+                                      MediaQuery.of(context).orientation)
+                                      ? 3
+                                      : 0),
+                              itemBuilder: (context, index) {
+                                return InkWell(
+                                  onTap: (){
+                                    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@qrCodeImage");
+                                    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@qrCodeImage${snapshot.data!.data[index].qrCodeImage}");
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) =>
+                                        ProductDeatailsScreen(
+                                          productId: "${snapshot.data!.data[index].id}",
+                                          imangNAME: snapshot.data!.data[index].qrCodeImage,
+                                          name: "${snapshot.data!.data[index].productName}",
+                                          Description: "${snapshot.data!.data[index].description}",
+                                          satus: "${snapshot.data!.data[index].status.name}",
+                                          images:"${snapshot.data!.data[index].images[0].imageNames.toString()}",
+                                          x:  snapshot.data!.data[index].images ,
+                                        ),));
 
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(2.0),
-                                  child: Column(children: [
-                                    Container(
-                                      width: 709,
-                                      height: 70,
-                                      child: Stack(
-                                        children: [
-                                          Container(
-                                            width: 700,
-                                            height: 70,
-                                            decoration: BoxDecoration(
-                                              //  borderRadius: BorderRadius.circular(15),
-                                              shape: BoxShape.circle,
-                                              border: Border.all(color: HexColor('#03A9D6')),
-                                              image: DecorationImage(
-                                                // fit: BoxFit.cover,
-                                                scale: 0.5,
-                                                image: NetworkImage(
-                                                  "http://192.168.1.23:4000/product/" +
-                                                      snapshot.data!.data[index].images[0]
-                                                          .imageNames
-                                                          .toString(),
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(2.0),
+                                    child: Column(children: [
+                                      Container(
+                                        width: 709,
+                                        height: 70,
+                                        child: Stack(
+                                          children: [
+                                            Container(
+                                              width: 700,
+                                              height: 70,
+                                              decoration: BoxDecoration(
+                                                //  borderRadius: BorderRadius.circular(15),
+                                                shape: BoxShape.circle,
+                                                border: Border.all(color: HexColor('#03A9D6')),
+                                                image: DecorationImage(
+                                                  // fit: BoxFit.cover,
+                                                  scale: 0.5,
+                                                  image: NetworkImage(snapshot.data!.data[index].images[0]
+                                                      .imageNames
+                                                      .toString(),
 
-                                                  // image: NetworkImage(imageusr+Data1![index].images![0].imageNames.toString(),
+                                                    // image: NetworkImage(imageusr+Data1![index].images![0].imageNames.toString(),
+                                                  ),
                                                 ),
                                               ),
+                                              alignment: Alignment.center,
                                             ),
-                                            alignment: Alignment.center,
-                                          ),
-                                          Container(
-                                            width: 700,
-                                            height: 70,
-                                            alignment: Alignment.center,
-                                            // margin: const EdgeInsets.only(right:20,left: 20),
-                                            child: DottedBorder(
-                                                borderType: BorderType.Circle,
-                                                radius: const Radius.circular(79),
-                                                dashPattern: const [12, 5],
-                                                color: (index % 3 == 0)
-                                                    ? HexColor('#03A9D6')
-                                                    : ((index % 3 == 1)
-                                                    ? Colors.redAccent
-                                                    : Colors.green),
-                                                strokeWidth: 2,
-                                                child: Container(
-                                                  width: 709,
-                                                  height: 70,
-                                                )),
-                                          )
-                                        ],
+                                            Container(
+                                              width: 700,
+                                              height: 70,
+                                              alignment: Alignment.center,
+                                              // margin: const EdgeInsets.only(right:20,left: 20),
+                                              child: DottedBorder(
+                                                  borderType: BorderType.Circle,
+                                                  radius: const Radius.circular(79),
+                                                  dashPattern: const [12, 5],
+                                                  color: (index % 3 == 0)
+                                                      ? HexColor('#03A9D6')
+                                                      : ((index % 3 == 1)
+                                                      ? Colors.redAccent
+                                                      : Colors.green),
+                                                  strokeWidth: 2,
+                                                  child: Container(
+                                                    width: 709,
+                                                    height: 70,
+                                                  )),
+                                            )
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                    Text(snapshot.data!.data[index].productName.toString(),
-                                        maxLines: 1,
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w500,
-                                            fontFamily: 'Aboshi',
-                                            overflow: TextOverflow.ellipsis)),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 2),
-                                    )
-                                  ]),
-                                ),
-                              );
-                            })
-                    )
+                                      Text(snapshot.data!.data[index].productName.toString(),
+                                          maxLines: 1,
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w500,
+                                              fontFamily: 'Aboshi',
+                                              overflow: TextOverflow.ellipsis)),
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 2),
+                                      )
+                                    ]),
+                                  ),
+                                );
+                              })
+                      )
 
 
-                  ],
-                );
+                    ],
+                  );
+                }
+
               }
             }),
       ),

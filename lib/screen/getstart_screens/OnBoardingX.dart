@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Auth/login_screen.dart';
 import 'Onboarding2.dart';
@@ -91,7 +92,9 @@ class _Itro1State extends State<Itro1> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      TextButton(onPressed: () {
+                      TextButton(onPressed: () async {
+                        SharedPreferences prefs = await SharedPreferences.getInstance();
+                        prefs.setBool("isLogout", true);
                         Navigator.of(context).pushReplacement(createRoute(
                             LoginScreen()));
                       },

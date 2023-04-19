@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:stuffy_club/screen/auth/login_screen.dart';
 
 import '../bottombar_screen.dart';
 import 'OnBoardingX.dart';
@@ -20,6 +21,8 @@ class _SplashScreenState extends State<SplashScreen> {
   getValuesSF() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var status = prefs.getBool('isLoggedIn') ?? false;
+    SharedPreferences prefs2 = await SharedPreferences.getInstance();
+    var status2 = prefs.getBool('isLogout') ?? false;
     print("_____________$status");
     Timer(
       Duration(seconds: 3),
@@ -31,7 +34,12 @@ class _SplashScreenState extends State<SplashScreen> {
                 BottomBar_Screen()
             )
         )
-            : Navigator.pushReplacement(context,
+            : status2 ?   Navigator.pushReplacement(context,
+            MaterialPageRoute(builder:
+                (context) =>
+                LoginScreen()
+            )
+        ) :  Navigator.pushReplacement(context,
             MaterialPageRoute(builder:
                 (context) =>
                     Itro1()

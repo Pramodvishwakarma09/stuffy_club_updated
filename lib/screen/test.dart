@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:stuffy_club/screen/my_gallery_screen.dart';
 import 'my_stuffy_screen.dart';
 import 'bottombar_screen.dart';
+import '../const.dart';
+import '../const.dart';
 
 class TestPage extends StatefulWidget {
   var product_id2;
@@ -16,11 +19,14 @@ class TestPage extends StatefulWidget {
 
 class _TestPageState extends State<TestPage> {
    void loginwithEmail() async {
+     print("@@@@@@@@@@@sfsdfdsfsdfsdf");
+
      try {
+       print({widget.product_id2});
        SharedPreferences prefs = await SharedPreferences.getInstance();
        var stringValue = prefs.getInt('user_id');
        final response = await http.post(
-         Uri.parse("http://192.168.1.23:4000/addgallery"),
+         Uri.parse("${AppUrl.baseUrl}/addgallery"),
          body: { "product_id" : "${widget.product_id2}",
            "user_id": stringValue.toString(),
          },
@@ -33,7 +39,7 @@ class _TestPageState extends State<TestPage> {
          if (login) {
            Navigator.pushReplacement(
              context,
-             MaterialPageRoute(builder: (context) => BottomBar_Screen()),
+             MaterialPageRoute(builder: (context) => MyGalleryScreen()),
            );
          } else {
 
@@ -97,7 +103,7 @@ class _TestPageState extends State<TestPage> {
    @override
   Widget build(BuildContext context) {
     return  Scaffold(
-           body: CircularProgressIndicator(),
+           body: Center(child: CircularProgressIndicator()),
     );
   }
 }

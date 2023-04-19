@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:http/http.dart' as http;
-import 'package:stuffy_club/Screens/Auth/login_screen.dart';
-import '../../FormTextField/Validation_Form_field.dart';
+import '../../helper/Validation_Form_field.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../t_c_screen.dart';
+import 'login_screen.dart';
+import '../../const.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -34,7 +35,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     loading = true;
     try {
       final response = await http.post(
-        Uri.parse("http://192.168.1.23:4000/signUp"),
+        Uri.parse("${AppUrl.baseUrl}/signUp"),
         body: {
           'full_name': fullNameC.value.text,
           'phone_number': phone_Number.value.text,

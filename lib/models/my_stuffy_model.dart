@@ -1,43 +1,43 @@
 // To parse this JSON data, do
 //
-//     final seealllModel = seealllModelFromJson(jsonString);
+//     final myStuffyModel = myStuffyModelFromJson(jsonString);
 
 import 'dart:convert';
 
-SeealllModel seealllModelFromJson(String str) => SeealllModel.fromJson(json.decode(str));
+MyStuffyModel myStuffyModelFromJson(String str) => MyStuffyModel.fromJson(json.decode(str));
 
-String seealllModelToJson(SeealllModel data) => json.encode(data.toJson());
+String myStuffyModelToJson(MyStuffyModel data) => json.encode(data.toJson());
 
-class SeealllModel {
-  SeealllModel({
+class MyStuffyModel {
+  MyStuffyModel({
     required this.message,
-    required this.response,
     required this.success,
     required this.status,
+    required this.data,
   });
 
   String message;
-  List<Response> response;
   bool success;
   int status;
+  List<Datum> data;
 
-  factory SeealllModel.fromJson(Map<String, dynamic> json) => SeealllModel(
+  factory MyStuffyModel.fromJson(Map<String, dynamic> json) => MyStuffyModel(
     message: json["message"],
-    response: List<Response>.from(json["response"].map((x) => Response.fromJson(x))),
     success: json["success"],
     status: json["status"],
+    data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
     "message": message,
-    "response": List<dynamic>.from(response.map((x) => x.toJson())),
     "success": success,
     "status": status,
+    "data": List<dynamic>.from(data.map((x) => x.toJson())),
   };
 }
 
-class Response {
-  Response({
+class Datum {
+  Datum({
     required this.id,
     required this.userId,
     required this.categoryId,
@@ -45,7 +45,7 @@ class Response {
     required this.description,
     required this.status,
     required this.qrCode,
-    required this.qrCodeImage,
+    this.qrCodeImage,
     required this.createdAt,
     required this.exclusiveStuffy,
     required this.updatedAt,
@@ -57,27 +57,27 @@ class Response {
   int categoryId;
   String productName;
   String description;
-  String status;
+  Status status;
   String qrCode;
-  String qrCodeImage;
+  String? qrCodeImage;
   DateTime createdAt;
   int exclusiveStuffy;
   DateTime updatedAt;
-  List<Image1> images;
+  List<Image> images;
 
-  factory Response.fromJson(Map<String, dynamic> json) => Response(
+  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
     id: json["id"],
     userId: json["user_id"],
     categoryId: json["category_id"],
     productName: json["product_name"],
     description: json["Description"],
-    status: json["status"],
+    status: statusValues.map[json["status"]]!,
     qrCode: json["QR_code"],
     qrCodeImage: json["QR_code_image"],
     createdAt: DateTime.parse(json["created_at"]),
     exclusiveStuffy: json["exclusive_stuffy"],
     updatedAt: DateTime.parse(json["Updated_at"]),
-    images: List<Image1>.from(json["images"].map((x) => Image1.fromJson(x))),
+    images: List<Image>.from(json["images"].map((x) => Image.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
@@ -86,7 +86,7 @@ class Response {
     "category_id": categoryId,
     "product_name": productName,
     "Description": description,
-    "status": status,
+    "status": statusValues.reverse[status],
     "QR_code": qrCode,
     "QR_code_image": qrCodeImage,
     "created_at": createdAt.toIso8601String(),
@@ -96,18 +96,38 @@ class Response {
   };
 }
 
-class Image1 {
-  Image1({
+class Image {
+  Image({
     required this.imageNames,
   });
 
   String imageNames;
 
-  factory Image1.fromJson(Map<String, dynamic> json) => Image1(
+  factory Image.fromJson(Map<String, dynamic> json) => Image(
     imageNames: json["Image_names"],
   );
 
   Map<String, dynamic> toJson() => {
     "Image_names": imageNames,
   };
+}
+
+enum Status { PUBLIC, STATUS_PUBLIC, PRIVATE }
+
+final statusValues = EnumValues({
+  "Private": Status.PRIVATE,
+  "public": Status.PUBLIC,
+  "Public": Status.STATUS_PUBLIC
+});
+
+class EnumValues<T> {
+  Map<String, T> map;
+  late Map<T, String> reverseMap;
+
+  EnumValues(this.map);
+
+  Map<T, String> get reverse {
+    reverseMap = map.map((k, v) => MapEntry(v, k));
+    return reverseMap;
+  }
 }

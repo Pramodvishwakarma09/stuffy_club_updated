@@ -6,11 +6,10 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../const.dart';
 import '../../models/profile_model.dart';
 import '../bottombar_screen.dart';
-import 'package:get/get.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
-import '../../controller/profile_controller.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({Key? key}) : super(key: key);
@@ -21,24 +20,23 @@ class EditProfileScreen extends StatefulWidget {
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
 
-  ProfileController profileController=Get.put(ProfileController());
 
   Future<ProfileModel> loadAssets() async {
+    print('stringValue.toString()');
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var stringValue = prefs.getInt('user_id');
-  ProfileModel lm;
-  String url = "http://192.168.1.23:4000/myprofile";
-  http.Response response =
-  await http.post(Uri.parse(url), body: {"id":  stringValue.toString()});
-  print(response.body.toString());
-  Map<String, dynamic> jsonresponse = jsonDecode(response.body);
-  lm = ProfileModel.fromJson(jsonresponse);
+    ProfileModel lm;
+    String url = "${AppUrl.baseUrl}/myprofile";
+    http.Response response =
+    await http.post(Uri.parse(url), body: {"id": stringValue.toString() });
+    Map<String, dynamic> jsonresponse = jsonDecode(response.body);
 
-  print(jsonresponse);
-
-  // var  free&paad = data
-  return lm;
-}
+    lm = ProfileModel.fromJson(jsonresponse);
+    fullNameC = TextEditingController(text: '${lm.data[0].fullName}');
+    phoneNumberC = TextEditingController(text:   '${lm.data[0].phoneNumber}');
+    var  _newImage = _image==null? lm.data[0].profileImage:_image;
+    return lm;
+  }
 
    final ImagePicker _picker = ImagePicker();
    File? _image;
@@ -56,12 +54,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
      });
      SharedPreferences prefs = await SharedPreferences.getInstance();
      var stringValue = prefs.getInt('user_id');
-     var request =  http.MultipartRequest("POST", Uri.parse("http://192.168.1.23:4000/editProfile"));
+     var request =  http.MultipartRequest("POST", Uri.parse("${AppUrl.baseUrl}/editProfile"));
      request.fields['full_name'] = fullNameC.text.toString();
      request.fields['phone_number'] = phoneNumberC.text.toString();
      request.fields['user_id'] = stringValue.toString();
      request.fields['status'] = "1";
-     request.fields['Membership_Plan'] = "paid";
+     request.fields['Membership_Plan'] = "1";
      // request.files.add(await http.MultipartFile.fromPath('file', _image!.path));
 
      if(_image==null){
@@ -137,9 +135,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     loadAssets();
     // TODO: implement initState
     super.initState();
-    fullNameC = TextEditingController(text: '${profileController.getdata!.data[0].fullName}');
-    phoneNumberC = TextEditingController(text:'${profileController.getdata!.data[0].phoneNumber}');
-   var  _newImage = _image==null? profileController.getdata!.profileImage:_image;
+
   }
 
   // File? imageFile;
@@ -181,9 +177,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(height: 15,),
-                      Container(
-                        color: Colors.greenAccent,
-                          child: Text("sdfsdf",style: TextStyle(color: Colors.red),)),
                       Center(child: _image==null? Container(
                           height: 150,
                           width: 150,
@@ -224,8 +217,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           ),
                           decoration:BoxDecoration(
                               image: DecorationImage(
-                                fit: BoxFit.fill,
-                                image: NetworkImage("${snapshot.data!.profileImage}"),
+                                fit: BoxFit.cover,
+                                image: NetworkImage("${snapshot.data!.data[0].profileImage}"),
                               ),
                               color: Colors.grey,
                               borderRadius: BorderRadius.circular(150)
@@ -306,7 +299,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         child: TextFormField(
                           controller: fullNameC,
                           decoration: InputDecoration(
-                            hintText: "Phone Number",
+                            hintText: "Full Name",
                             contentPadding: EdgeInsets.fromLTRB(15,5,0,0),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
@@ -327,20 +320,17 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         ),
                       ),
                       SizedBox(height: 5,),
-                      SizedBox(
-                        height: 50,
-                        child: TextFormField(
+                      TextFormField(
+                        maxLength: 12,
 
-                          keyboardType: TextInputType.number,
-
-                          controller: phoneNumberC,
-                          decoration: InputDecoration(
-
-                            hintText: "Phone Number",
-                            contentPadding: EdgeInsets.fromLTRB(15,5,0,0),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
+                        keyboardType: TextInputType.number,
+                        controller: phoneNumberC,
+                        decoration: InputDecoration(
+                          counter: Container(),
+                          hintText: "Phone Number",
+                          contentPadding: EdgeInsets.fromLTRB(15,5,0,0),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
                           ),
                         ),
                       ),

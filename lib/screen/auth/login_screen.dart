@@ -1,14 +1,19 @@
 import 'dart:convert';
+import 'dart:io';
+import 'package:device_info/device_info.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:stuffy_club/Screens/Auth/sign_up_screen.dart';
-import '../../FormTextField/Validation_Form_field.dart';
+import 'package:stuffy_club/screen/auth/sign_up_screen.dart';
+import '../../helper/Validation_Form_field.dart';
+import '../../notifaction_services/notification_service.dart';
 import '../bottombar_screen.dart';
 import 'forget_password_screen.dart';
 import 'package:http/http.dart' as http;
+import '../../const.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -18,33 +23,42 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
+  NotificationServices notificationServices = NotificationServices();
+
+
   TextEditingController email_AddressC = TextEditingController();
   TextEditingController passwordC = TextEditingController();
+
 
   final _formkey = GlobalKey<FormState>();
   bool chack1 = true;
   bool loading = false;
+  var deviceToken ;
+  var devicType ;
+
+
 
   void loginwithEmail() async {
     loading = true;
 
     try {
       final response = await http.post(
-        Uri.parse("http://192.168.1.23:4000/login"),
+        Uri.parse("${AppUrl.baseUrl}/login"),
         body: {
           "email": email_AddressC.value.text,
           "password": passwordC.value.text,
+          "fcm_token" : "$deviceToken",
+          "device_type" : "$devicType"
+
+
         },
       ).timeout(Duration(seconds: 30));
 
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
         bool login = data['success'];
-        print("@@@@@@@@@@@@@@@@@@@@@");
         print("--------------------------$login");
-        int user_id = data["data"][0]["id"];
-        print("________________@@______${user_id}");
-
         Fluttertoast.showToast(
           msg: "${data["message"]}",
           toastLength: Toast.LENGTH_LONG,
@@ -52,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
           gravity: ToastGravity.BOTTOM,
           //location
           timeInSecForIosWeb: 1,
-          backgroundColor: Colors.lightGreenAccent,
+          backgroundColor: Colors.red,
           //background color
           textColor: Colors.white,
           //text Color
@@ -63,68 +77,69 @@ class _LoginScreenState extends State<LoginScreen> {
           loading = false;
         });
         if (login) {
+          int user_id = data["data"][0]["id"];
+          print("________________@@______${user_id}");
           print("loggggin");
           SharedPreferences prefs = await SharedPreferences.getInstance();
           prefs.setBool("isLoggedIn", true);
           prefs.setInt('user_id', user_id);
-
-
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => BottomBar_Screen()),
-          );
-
-          setState(() {
-            loading = false;
-          });
-        } else {
-          print("++++++++++++++++++");
-          Fluttertoast.showToast(
-            msg: "Internal server error",
-            toastLength: Toast.LENGTH_LONG,
-            //duration
-            gravity: ToastGravity.TOP,
-            //location
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.red,
-            //background color
-            textColor: Colors.white,
-            //text Color
-            fontSize: 16.0,
-            //font size
-          );
-
+          Navigator.push(context, MaterialPageRoute(builder: (context) => BottomBar_Screen()),);
+          setState(() {loading = false;});
+         } else {
+          print("-------------------------@@@@@@@@@1 -----------------------------------------");
+          // Fluttertoast.showToast(msg: "${data["message"]}", toastLength: Toast.LENGTH_LONG,
+          //   //duration
+          //   gravity: ToastGravity.TOP,
+          //   //location
+          //   timeInSecForIosWeb: 1,
+          //   backgroundColor: Colors.red,
+          //   //background color
+          //   textColor: Colors.white,
+          //   //text Color
+          //   fontSize: 16.0,
+          //   //font size
+          // );
         }
       } else {
-
         setState(() {
           loading = false;
         });
-        print('failed');
+        print("-------------------------@@@@@@@@@2-----------------------------------------");
       }
     } catch (e) {
-
-      setState(() {
-        loading = false;
-        Fluttertoast.showToast(
-          msg: "verify user",
-          toastLength: Toast.LENGTH_LONG,
-          //duration
-          gravity: ToastGravity.TOP,
-          //location
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          //background color
-          textColor: Colors.white,
-          //text Color
-          fontSize: 16.0,
-          //font size
-        );
-        print(
-            "------------------------------------------------------------------");
-        print("@@@@@@@@@@@@@@@@@@@${e}");
-      });
+      setState(() {loading = false;});
+      Fluttertoast.showToast(
+        msg: "${e.toString()}",
+        toastLength: Toast.LENGTH_LONG,
+        //duration
+        gravity: ToastGravity.TOP,
+        //location
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        //background color
+        textColor: Colors.white,
+        //text Color
+        fontSize: 16.0,
+        //font size
+      );
+      print("-------------------------@@@@@@@@@3 -----------------------------------------");
       print(e.toString());
+    }
+  }
+
+  Future<void> devicTypeCheck()async{
+    if (Platform.isAndroid) {
+      var androidInfo = await DeviceInfoPlugin().androidInfo;
+      var release = androidInfo.version.release;
+      var sdkInt = androidInfo.version.sdkInt;
+      var manufacturer = androidInfo.manufacturer;
+      var model = androidInfo.model;
+      print('Android $release (SDK $sdkInt), $manufacturer $model');
+      devicType="0";
+      // Android 9 (SDK 28), Xiaomi Redmi Note 7
+    }else{
+      devicType="1";
+
     }
   }
 
@@ -139,8 +154,21 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getStringValuesSF();
+    devicTypeCheck();
+    // devicTypeCheck();
+    notificationServices.requestNotificationPermission();
+    // notificationServices.firebaseInit(context);
+    // notificationServices.setupInteractMessage(context);
+    // notificationServices.isTokenRefresh();
+    notificationServices.getDeviceToken().then((value){
+      deviceToken=value;
+      if (kDebugMode) {
+        print('device token');
+        print("@@@@${value}@@@@@");
+      }
+    });
 
+    getStringValuesSF();
   }
 
   @override
@@ -327,7 +355,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             onTap: () {
                               if (_formkey.currentState!.validate()) {
                                 loginwithEmail();
-                                setState(() {});
+                                setState(() {
+                                  print("call loginwith email");
+                                });
                                 // signin();
                               }
                             },

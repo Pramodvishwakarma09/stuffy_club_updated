@@ -1,11 +1,16 @@
+import 'dart:convert';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hexcolor/hexcolor.dart';
-
-import 'add_stuffy_screen.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:stuffy_club/helper/AppColor.dart';
+import '../const.dart';
 
 class ProductDeatailsScreen extends StatefulWidget {
+  final String  ?productId;
   final String name;
   final String satus;
   final String Description;
@@ -14,6 +19,7 @@ class ProductDeatailsScreen extends StatefulWidget {
   String? imangNAME;
   // List x;
   ProductDeatailsScreen({
+    // required  this.productId
     Key? key,
     this.imangNAME,
     required this.satus,
@@ -23,6 +29,7 @@ class ProductDeatailsScreen extends StatefulWidget {
     required this.Description,
     // // required this.x,
     required this.images,
+    this.productId,
     //
   }) : super(key: key);
 
@@ -31,11 +38,95 @@ class ProductDeatailsScreen extends StatefulWidget {
 }
 
 class _ProductDeatailsScreenState extends State<ProductDeatailsScreen> {
+
+
   var image = 0;
-  var image_usr = 'http://192.168.1.23:4000/uploads/';
+  var image_usr = '${AppUrl.baseUrl}/uploads/';
+  bool loading = false;
+  void addStripe() async {
+    print("add stripe fuction call ");
+    loading = true;
+
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      var stringValue = prefs.getInt('user_id');
+      print(stringValue.toString());
+      final response = await http.post(
+        Uri.parse("${AppUrl.baseUrl}/addsprite"),
+        body: {
+          "user_id":stringValue.toString(),
+          "product_id":"${widget.productId}",
+        },
+      ).timeout(Duration(seconds: 30));
+
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body);
+        var login = data['message'];
+        print("--------------------------$login");
+        Fluttertoast.showToast(
+          msg: "${data["message"]}",
+          toastLength: Toast.LENGTH_LONG,
+          //duration
+          gravity: ToastGravity.BOTTOM,
+          //location
+          timeInSecForIosWeb: 1,
+          backgroundColor: appcolor.primary,
+          //background color
+          textColor: Colors.white,
+          //text Color
+          fontSize: 16.0,
+          //font size
+        );
+        setState(() {
+          loading = false;
+        });
+
+      } else {
+        setState(() {
+          // Fluttertoast.showToast(
+          //   msg: "${data["message"]}",
+          //   toastLength: Toast.LENGTH_LONG,
+          //   //duration
+          //   gravity: ToastGravity.TOP,
+          //   //location
+          //   timeInSecForIosWeb: 1,
+          //   backgroundColor: Colors.red,
+          //   //background color
+          //   textColor: Colors.white,
+          //   //text Color
+          //   fontSize: 16.0,
+          //   //font size
+          // );
+
+          loading = false;
+        });
+        print("-------------------------@@@@@@@@@2-----------------------------------------");
+      }
+    } catch (e) {
+      setState(() {loading = false;});
+      Fluttertoast.showToast(
+        msg: "${e.toString()}",
+        toastLength: Toast.LENGTH_LONG,
+        //duration
+        gravity: ToastGravity.TOP,
+        //location
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        //background color
+        textColor: Colors.white,
+        //text Color
+        fontSize: 16.0,
+        //font size
+      );
+      print("-------------------------@@@@@@@@@3 -----------------------------------------");
+      print(e.toString());
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
+    print("-------------------------@@@@@@@@@3 ------------------------------------${widget.productId}");
     return Scaffold(
         drawerEnableOpenDragGesture: false,
         appBar: AppBar(
@@ -263,7 +354,7 @@ class _ProductDeatailsScreenState extends State<ProductDeatailsScreen> {
                       width: 335,
                       child: Image(
                         image: NetworkImage(
-                          "http://192.168.1.23:4000/product/${widget.x[image].imageNames}",
+                          "${widget.x[image].imageNames}",
                         ),
                         fit: BoxFit.fill,
                       ),
@@ -332,7 +423,7 @@ class _ProductDeatailsScreenState extends State<ProductDeatailsScreen> {
                                             child: Image(
                                               width: 70,
                                               image: NetworkImage(
-                                                "http://192.168.1.23:4000/product/${widget.x[index].imageNames}",
+                                                "${widget.x[index].imageNames}",
                                               ),
                                               fit: BoxFit.fill,
                                             )),
@@ -370,8 +461,9 @@ class _ProductDeatailsScreenState extends State<ProductDeatailsScreen> {
             SizedBox(height: 27),
             InkWell(
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => AddStuffyScreen()));
+                addStripe();
+                // Navigator.push(context,
+                //     MaterialPageRoute(builder: (_) => AddStuffyScreen()));
               },
               child: Container(
                 margin: EdgeInsets.all(12),
@@ -383,7 +475,7 @@ class _ProductDeatailsScreenState extends State<ProductDeatailsScreen> {
                 height: 60,
                 child: Center(
                   child: Text(
-                    'Create Stripe',
+                    'Create Sprites',
                     style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w400,

@@ -3,13 +3,13 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:stuffy_club/models/t_c_model.dart';
+import '../const.dart';
 
 
 class TCScreen extends StatelessWidget {
    TCScreen({Key? key}) : super(key: key);
 
 
-  // TCController tcController=Get.put(TCController());
 
    Future<TcModel> loadAssets2() async {
      print('stringValue.toString()');
@@ -17,7 +17,7 @@ class TCScreen extends StatelessWidget {
      // var stringValue = prefs.getInt('user_id');
 
      TcModel lm;
-     String url = "http://192.168.1.23:4000/termsandcondition";
+     String url = "${AppUrl.baseUrl}/termsandcondition";
      http.Response response = await http.post(Uri.parse(url),
          body: {'category_id': "1"});
      Map<String, dynamic> jsonresponse = jsonDecode(response.body);

@@ -1,8 +1,8 @@
 import 'dart:core';
 import 'dart:ui';
 
-class AppColors {
-  static const Color My_Kitti = Color(0xFFFFFF);
+class appcolor {
+  static const Color primary =  Color(0xff86C33C);
   static const Color Lazy_Panda = Color(0xFFFFFF);
   static const Color Cute_Doggy = Color(0xFFFFFF);
   static const Color Baby_Bear = Color(0xFFFFFF);

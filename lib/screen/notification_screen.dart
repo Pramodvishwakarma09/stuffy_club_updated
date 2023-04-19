@@ -7,12 +7,12 @@ import '../models/notification_model.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:convert';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import '../../common function/basurl.dart';
 import 'package:http/http.dart'as http;
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import '../models/notifaction_model.dart';
+import '../const.dart';
 
 
 class NotificationScreen extends StatefulWidget {
@@ -26,7 +26,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
   Future<NotoficationModel> loadAssets() async {
     NotoficationModel lm;
-    String url = "http://192.168.1.23:4000/getallnotification";
+    String url = "${AppUrl.baseUrl}/getallnotification";
     http.Response response =
     await http.post(Uri.parse(url), body: {"user_id": "10"});
     Map<String, dynamic> jsonresponse = jsonDecode(response.body);

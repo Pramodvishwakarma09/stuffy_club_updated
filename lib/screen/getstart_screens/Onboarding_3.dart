@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../Auth/login_screen.dart';
 import 'Onboarding_4.dart';
 
@@ -92,7 +93,9 @@ class _Onboarding_3State extends State<Onboarding_3> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      TextButton(onPressed: () {
+                      TextButton(onPressed: () async {
+                        SharedPreferences prefs = await SharedPreferences.getInstance();
+                        prefs.setBool("isLogout", true);
                         Navigator.of(context).pushReplacement(createRoute(
                             LoginScreen()));
                       },

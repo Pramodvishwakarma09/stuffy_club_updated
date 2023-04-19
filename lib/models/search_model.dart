@@ -13,31 +13,67 @@ class SearchModel {
     required this.message,
     required this.status,
     required this.success,
-    required this.products,
+    required this.categories,
+    required this.exclusiveStuffy,
+    required this.newestStuffy,
   });
 
   String message;
   int status;
   bool success;
-  List<Product> products;
+  List<Category> categories;
+  List<Stuffy> exclusiveStuffy;
+  List<Stuffy> newestStuffy;
 
   factory SearchModel.fromJson(Map<String, dynamic> json) => SearchModel(
     message: json["message"],
     status: json["status"],
     success: json["success"],
-    products: List<Product>.from(json["products"].map((x) => Product.fromJson(x))),
+    categories: List<Category>.from(json["categories"].map((x) => Category.fromJson(x))),
+    exclusiveStuffy: List<Stuffy>.from(json["exclusive_stuffy"].map((x) => Stuffy.fromJson(x))),
+    newestStuffy: List<Stuffy>.from(json["newest_stuffy"].map((x) => Stuffy.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
     "message": message,
     "status": status,
     "success": success,
-    "products": List<dynamic>.from(products.map((x) => x.toJson())),
+    "categories": List<dynamic>.from(categories.map((x) => x.toJson())),
+    "exclusive_stuffy": List<dynamic>.from(exclusiveStuffy.map((x) => x.toJson())),
+    "newest_stuffy": List<dynamic>.from(newestStuffy.map((x) => x.toJson())),
   };
 }
 
-class Product {
-  Product({
+class Category {
+  Category({
+    required this.id,
+    required this.categoryName,
+    required this.image,
+    required this.createdAt,
+  });
+
+  int id;
+  String categoryName;
+  String image;
+  DateTime createdAt;
+
+  factory Category.fromJson(Map<String, dynamic> json) => Category(
+    id: json["id"],
+    categoryName: json["category_name"],
+    image: json["image"],
+    createdAt: DateTime.parse(json["created_at"]),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "category_name": categoryName,
+    "image": image,
+    "created_at": createdAt.toIso8601String(),
+  };
+}
+
+class Stuffy {
+  Stuffy({
     required this.id,
     required this.userId,
     required this.categoryId,
@@ -65,7 +101,7 @@ class Product {
   DateTime updatedAt;
   List<Image> images;
 
-  factory Product.fromJson(Map<String, dynamic> json) => Product(
+  factory Stuffy.fromJson(Map<String, dynamic> json) => Stuffy(
     id: json["id"],
     userId: json["user_id"],
     categoryId: json["category_id"],
@@ -98,16 +134,16 @@ class Product {
 
 class Image {
   Image({
-    required this.imageNames,
+    required this.imageUrl,
   });
 
-  String imageNames;
+  String imageUrl;
 
   factory Image.fromJson(Map<String, dynamic> json) => Image(
-    imageNames: json["Image_names"],
+    imageUrl: json["image_url"],
   );
 
   Map<String, dynamic> toJson() => {
-    "Image_names": imageNames,
+    "image_url": imageUrl,
   };
 }
