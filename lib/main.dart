@@ -13,6 +13,7 @@ import 'dart:core';
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
   print('Handling a background message ${message.messageId}');
+  print("pramod vishwakarma ");
 }
 
 
@@ -40,9 +41,7 @@ class MyApp extends StatelessWidget {
         return  MultiProvider(
             providers: [
               ChangeNotifierProvider(create: (_) => LoginProvider()),
-              // ChangeNotifierProvider(create: (_) => ExampleOneProvider()),
-              // ChangeNotifierProvider(create: (_) => ExampleTwoProvider()),
-              // ChangeNotifierProvider(create: (_) =>  AuthProvider()),
+
             ],
             child: GetMaterialApp(
               debugShowCheckedModeBanner: false,
