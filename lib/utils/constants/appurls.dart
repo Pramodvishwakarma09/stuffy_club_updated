@@ -39,4 +39,8 @@ class AppUrl{
   static const String getsprites = "$baseUrl/getsprites";
   static const String get_share_gallery = "$baseUrl/get_share_gallery";
   static const String share_my_gallery = "$baseUrl/share_my_gallery";
+
+  static const String edit_product = "$baseUrl/edit_product";
+  static const String delete_myProfile = "http://159.89.248.34:3000/delete_myProfile";
+  static const String delete_product = "http://159.89.248.34:3000/delete_product";
 }

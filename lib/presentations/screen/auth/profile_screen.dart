@@ -1,5 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
+import 'package:stuffy_club/presentations/screen/auth/sign_up_screen.dart';
 import '../../../domain/models/profile_model.dart';
 import '../../../utils/constants/colors.dart';
 import 'package:image_picker/image_picker.dart';
@@ -10,6 +13,8 @@ import '../plans2_screen.dart';
 import 'edit_profile_screen.dart';
 import 'package:hexcolor/hexcolor.dart';
 
+import 'login_screen.dart';
+
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
@@ -18,6 +23,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+    var  loading = false;
 
 
   Future<ProfileModel> loadAssets() async {
@@ -34,6 +40,64 @@ class _ProfileScreenState extends State<ProfileScreen> {
     lm = ProfileModel.fromJson(jsonresponse);
     return lm;
   }
+  void deleteProfile( ) async {
+    loading = true;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var stringValue = prefs.getInt('user_id');
+    try {
+      final response = await http.post(
+        Uri.parse(AppUrl.delete_myProfile),
+        body: {
+          "user_id": "${stringValue}",
+        },
+      ).timeout(Duration(seconds: 30));
+
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body);
+        // bool login = data['success'];
+
+        // Fluttertoast.showToast(
+        //   msg: "${data["message"]}",
+        //   toastLength: Toast.LENGTH_LONG,
+        //   //duration
+        //   gravity: ToastGravity.BOTTOM,
+        //   //location
+        //   timeInSecForIosWeb: 1,
+        //   backgroundColor: Colors.red,
+        //   //background color
+        //   textColor: Colors.white,
+        //   //text Color
+        //   fontSize: 16.0,
+        //   //font size
+        // );
+        setState(() {
+          loading = false;
+        });
+      } else {
+        setState(() {
+          loading = false;
+        });
+      }
+    } catch (e) {
+      setState(() {loading = false;});
+      Fluttertoast.showToast(
+        msg: "${e.toString()}",
+        toastLength: Toast.LENGTH_LONG,
+        //duration
+        gravity: ToastGravity.TOP,
+        //location
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        //background color
+        textColor: Colors.white,
+        //text Color
+        fontSize: 16.0,
+        //font size
+      );
+      print(e.toString());
+    }
+  }
+
 
 
 
@@ -61,13 +125,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   fontSize: 18,
                   fontFamily: 'Aboshi',
                   color: colors.black2)),
-          // leading: IconButton(icon: Icon(Icons.arrow_back_ios,
-          //   color: colors.black1,),
-          //   onPressed: (){
-          //
-          //   },
-          // ),
-
 
           centerTitle: true,
         ),
@@ -124,6 +181,58 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                       profileCard(context, 75, "Phone Number", "+91 ${snapshot.data!.data[0].phoneNumber}"),
                       profileCard(context, 75, "Email Address", "${snapshot.data!.data[0].email}"),
+                      Card(
+                        elevation: 5,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                        child: Container(
+                          padding: const EdgeInsets.all(10),
+                          height: 50.5,
+                          width: MediaQuery.of(context).size.width,
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Delete Profile',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontFamily: 'Aboshi',
+                                      fontWeight: FontWeight.w400,
+                                      color: colors.black1,
+                                    ),
+                                  ),
+                                  InkWell(
+                                    onTap: () async{
+                                      deleteProfile();
+                                      SharedPreferences prefs =
+                                          await SharedPreferences.getInstance();
+                                      prefs.setBool("isLoggedIn", false);
+                                      Navigator.pushAndRemoveUntil(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (_) => const LoginScreen()),
+                                            (route) => false,
+                                      );
+                                    },
+                                    child: Text(
+                                      'Delete',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.red,
+                                      ),
+                                    ),
+                                  ),
+
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+
                       Card(
                         elevation: 5,
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),

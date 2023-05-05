@@ -156,7 +156,8 @@ class _ProductDeatailsScreenState extends State<ProductDeatailsScreen> {
                           "${widget.imangNAME}",
                         ),
                         fit: BoxFit.fill,
-                      )),
+                      )
+                  ),
                 ),
               ];
             },

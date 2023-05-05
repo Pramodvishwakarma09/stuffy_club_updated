@@ -8,7 +8,7 @@ import '../../domain/models/my_stuffy_model.dart';
 import '../../utils/constants/appurls.dart';
 import 'get_all_friend_screen.dart';
 import 'my_gallery_screen.dart';
-import 'product_deatails.dart';
+import 'my_stuffy_product_deatails_screen.dart';
 import 'add_stuffy_screen.dart';
 import 'package:hexcolor/hexcolor.dart';
 
@@ -122,11 +122,12 @@ class _StuffyScreenState extends State<MyStuffyScreen> {
                   itemBuilder: (context, index) {
                     return InkWell(
                       onTap: () {
-
+                        print("kfjklgjhgjkshfvthgfndsfkggh");
+                   print("${snapshot.data!.data[index].status.name}");
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ProductDeatailsScreen(
+                                builder: (context) => MyProductDeatailsScreen(
                                       imangNAME:
                                           "${snapshot.data!.data[index].qrCodeImage}",
                                       productId:
@@ -141,7 +142,8 @@ class _StuffyScreenState extends State<MyStuffyScreen> {
                                       images: snapshot.data!.data[index]
                                           .images[0].imageNames
                                           .toString(),
-                                    )));
+                                    )
+                            ));
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(2.0),

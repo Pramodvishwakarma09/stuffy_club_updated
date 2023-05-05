@@ -130,7 +130,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         appBar: customAppBar("Edit Profile",context,),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30.0),
-          child: FutureBuilder(
+          child:FutureBuilder(
             future: loadAssets(),
             builder: (context, AsyncSnapshot<ProfileModel> snapshot) {
               if (snapshot.hasData) {
@@ -139,91 +139,86 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(height: 15,),
-                      Center(
-                        child: _image == null
-                            ? Container(
-                                decoration: BoxDecoration(
-                            // image: DecorationImage(
-                            //   fit: BoxFit.cover,
-                            //   image: AssetImage("asset/images/demoprofile.png"),
-                            // ),
-                              color: Colors.grey,
-                              borderRadius: BorderRadius.circular(150)),
-                                  height: 150,
-                                width: 150,
-                                child: Stack(
-                                  children: [
-                                    // Image.asset(
-                                    //   "asset/images/demoprofile.png",
-                                    // ),
-                                  Center(
-                                    child: ClipRRect(
-                                      child: Image.network("${snapshot.data!.data[0].profileImage}",fit: BoxFit.cover),
-                                    ),
-                                  ),
-                                   Center(
-                                     child: InkWell(
+                      Center(child: _image==null? Container(
+                        height: 150,
+                        width: 150,
+                        child: InkWell(
+                          onTap: () {
+                            showModalBottomSheet(
+                                context: context,
+                                builder: (context) {
+                                  return Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      ListTile(
+                                        leading: new Icon(Icons.photo),
+                                        title: new Text('Photo'),
                                         onTap: () {
-                                          showModalBottomSheet(
-                                              context: context,
-                                              builder: (context) {
-                                                return Column(
-                                                  mainAxisSize: MainAxisSize.min,
-                                                  children: <Widget>[
-                                                    ListTile(
-                                                      leading:  Icon(Icons.photo),
-                                                      title:  Text('Photo'),
-                                                      onTap: () {
-                                                        _imgFromGallery();
-                                                        Navigator.pop(context);
-                                                      },
-                                                    ),
-                                                    ListTile(
-                                                      leading:  Icon(
-                                                          Icons.camera_alt_outlined),
-                                                      title:  Text('Camera'),
-                                                      onTap: () {
-                                                        _imgFromCamera();
-                                                        Navigator.pop(context);
-                                                      },
-                                                    ),
-                                                  ],
-                                                );
-                                              });
+                                          _imgFromGallery();
+                                          Navigator.pop(context);
                                         },
-                                        // child:Container(
-                                        child: Icon(Icons.camera_alt_outlined,
-                                            color: Colors.black),
                                       ),
-                                   ),
+                                      ListTile(
+                                        leading: new Icon(Icons.camera_alt_outlined),
+                                        title: new Text('Camera'),
+                                        onTap: () {
+                                          _imgFromCamera();
+                                          Navigator.pop(context);
+                                        },
+                                      ),
 
-                                  ],
-                                ),
-                              )
-                            : Container(
-                                height: 150,
-                                width: 150,
-                                child: InkWell(
-                                  onTap: () {
+                                    ],
+                                  );
+                                });
+                          },
+                          // child:Container(
+                          child: Icon(
+                              Icons.camera_alt_outlined,
+                              color: Colors.black
+                          ),
+                        ),
+                        decoration:BoxDecoration(
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: NetworkImage("${snapshot.data!.data[0].profileImage}"),
+                            ),
+                            color: Colors.grey,
+                            borderRadius: BorderRadius.circular(150)
+                        ),
+                      ): Container(
+                        // padding: EdgeInsets.only(left:113,top:130,right:112,bottom:532),
+                          height: 150,
+                          width: 150,
+                          child:
+                          Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                InkWell(
+                                  onTap: (){
+                                    // _openCamera(context);
+
                                     _imgFromGallery();
+                                    // _showDialog(context);
                                   },
+
                                   child: Icon(
                                     Icons.camera_alt_outlined,
                                   ),
                                 ),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: FileImage(_image!),
-                                          ),
-                                      )
-                                    ),
-                                ),
+                              ]
+                          ),
 
-                      SizedBox(
-                        height: 21,
-                      ),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              //colorFilter: ColorFilter.matrix(1),
+                              image: FileImage(_image!),
+                            ),
+                          )
+                      ), ),
+
+                      SizedBox(height: 21,),
                       Center(
                         child: Text(
                           '${snapshot.data!.data[0].fullName}',
@@ -246,13 +241,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       //     ),
                       //   ),
                       // ),),
-                      SizedBox(
-                        height: 5,
-                      ),
+                      SizedBox(height: 5,),
                       Center(child: Text("${snapshot.data!.data[0].email}")),
-                      SizedBox(
-                        height: 43,
-                      ),
+                      SizedBox(height: 43,),
                       Text(
                         'Full Name',
                         style: TextStyle(
@@ -262,9 +253,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           color: colors.black1,
                         ),
                       ),
-                      SizedBox(
-                        height: 5,
-                      ),
+                      SizedBox(height: 5,),
+
 
                       SizedBox(
                         height: 50,
@@ -272,7 +262,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           controller: fullNameC,
                           decoration: InputDecoration(
                             hintText: "Full Name",
-                            contentPadding: EdgeInsets.fromLTRB(15, 5, 0, 0),
+                            contentPadding: EdgeInsets.fromLTRB(15,5,0,0),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
@@ -280,11 +270,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         ),
                       ),
 
+
                       SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        'Phone Number',
+                        height: 10,),
+                      Text('Phone Number',
                         style: TextStyle(
                           fontSize: 16,
                           fontFamily: 'Aboshi',
@@ -292,25 +281,23 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           color: colors.black1,
                         ),
                       ),
-                      SizedBox(
-                        height: 5,
-                      ),
+                      SizedBox(height: 5,),
                       TextFormField(
                         maxLength: 12,
+
                         keyboardType: TextInputType.number,
                         controller: phoneNumberC,
                         decoration: InputDecoration(
                           counter: Container(),
                           hintText: "Phone Number",
-                          contentPadding: EdgeInsets.fromLTRB(15, 5, 0, 0),
+                          contentPadding: EdgeInsets.fromLTRB(15,5,0,0),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
                       ),
                       SizedBox(
-                        height: 20,
-                      ),
+                        height: 20,),
 
                       InkWell(
                         onTap: () {
@@ -320,35 +307,34 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           //padding: const EdgeInsets.symmetric(16),
                           margin: EdgeInsets.all(12),
                           decoration: BoxDecoration(
-                              color: Color(0xff86C33C),
+                              color:Color(0xff86C33C),
                               borderRadius: BorderRadius.circular(13)),
                           width: MediaQuery.of(context).size.width,
                           height: 56,
-                          child: loading
-                              ? Center(
-                                  child: CircularProgressIndicator(
-                                  color: Colors.white,
-                                ))
-                              : Center(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        'Update',
-                                        style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w400,
-                                            fontFamily: 'Aboshi',
-                                            color: colors.whit),
-                                      )
-                                    ],
-                                  ),
-                                ),
+                          child: loading? Center(child: CircularProgressIndicator(color: Colors.white,))
+                              :
+                          Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Update',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w400,
+                                      fontFamily: 'Aboshi',
+                                      color: colors.whit),
+                                )
+                              ],
+                            ),
+                          ),
                         ),
                       ),
+
                     ],
                   ),
                 );
+
               } else {
                 return Center(
                   child: CircularProgressIndicator(),
@@ -356,6 +342,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               }
             },
           ),
+
         ));
   }
 }
