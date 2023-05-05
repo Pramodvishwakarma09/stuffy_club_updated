@@ -60,44 +60,8 @@ class _MyFriendGalleryScreenState extends State<MyFriendGalleryScreen> {
                 color: colors.black1,
                 height: 2),
           ),
-          // actions: [
-          //   PopupMenuButton(itemBuilder: (context) {
-          //     return [
-          //       PopupMenuItem<int>(
-          //           value: 0,
-          //           child: InkWell(
-          //             onTap: () {
-          //               Navigator.push(
-          //                   context,
-          //                   MaterialPageRoute(
-          //                     builder: (context) => const ShareFriendListScreen(),
-          //                   ));
-          //             },
-          //             child: const Text("Share",
-          //                 style: TextStyle(
-          //                   fontSize: 16,
-          //                   fontWeight: FontWeight.w400,
-          //                   fontFamily: 'Aboshi',
-          //                 )),
-          //           )),
-          //
-          //     ];
-          //   },),
-          // ]
       ),
 
-      // floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-
-      // floatingActionButton: Padding(
-      //   padding: const EdgeInsets.only(bottom: 20, right: 10),
-      //   child: FloatingActionButton(
-      //       child: Icon(Icons.add),
-      //       backgroundColor: colors.primary,
-      //       onPressed: () {
-      //         Navigator.push(context,
-      //             MaterialPageRoute(builder: (_) => AddStuffyScreen()));
-      //       }),
-      // ),
       body: FutureBuilder(
         future: fechData(),
         builder: (context, AsyncSnapshot<MyFriendGalleryModel> snapshot) {

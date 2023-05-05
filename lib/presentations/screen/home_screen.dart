@@ -96,7 +96,6 @@ class _HomeScreenState extends State<HomeScreen> {
     Map<String, dynamic> jsonresponse = jsonDecode(response.body);
     print("pramod");
      counter = jsonresponse["notification_count"][0]["count"];
-     counter=5;
     var  message = (HomeModel.fromJson(jsonDecode(response.body)).message);
     print(message);
     lm = HomeModel.fromJson(jsonresponse);

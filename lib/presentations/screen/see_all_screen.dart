@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import '../../../utils/constants/colors.dart';
 import 'package:http/http.dart' as http;
 import '../../domain/models/seeall_model.dart';
 import '../widgets/app_bar.dart';

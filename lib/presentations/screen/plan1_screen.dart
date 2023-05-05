@@ -28,7 +28,7 @@ class _PlansState extends State<Plans> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 1,
-        title: Text('Plans', style: TextStyle(
+        title: const Text('Plans', style: TextStyle(
             fontWeight: FontWeight.w400,
             fontSize: 18,
             fontFamily: 'Aboshi',
@@ -47,7 +47,7 @@ class _PlansState extends State<Plans> {
             },
             child: SvgPicture.asset('asset/new icons/Shape1.svg'),
           )
-          ,Padding(padding: EdgeInsets.only(left:35,right:2))
+          ,const Padding(padding: EdgeInsets.only(left:35,right:2))
 
         ],
 

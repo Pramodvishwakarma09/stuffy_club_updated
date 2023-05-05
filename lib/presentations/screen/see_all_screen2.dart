@@ -8,6 +8,7 @@ import '../widgets/app_bar.dart';
 import 'product_deatails.dart';
 import 'package:hexcolor/hexcolor.dart';
 
+
 class SeeAllScreen2 extends StatefulWidget {
   const SeeAllScreen2({Key? key}) : super(key: key);
 

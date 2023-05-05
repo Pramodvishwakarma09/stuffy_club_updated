@@ -19,6 +19,9 @@ class NotificationScreen extends StatefulWidget {
 
 class _NotificationScreenState extends State<NotificationScreen> {
 
+   var isLoading =false;
+   var selectedIndex ;
+   var selectedIndex1 ;
   Future<NotoficationModel> loadAssets() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var stringValue = prefs.getInt('user_id');
@@ -87,14 +90,29 @@ class _NotificationScreenState extends State<NotificationScreen> {
                             Text("${snapshot.data!.response[index].body}", style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500),),
                             SizedBox(height: 10.h,),
                             "${snapshot.data!.response[index].friendRequestStatus}" == "0" ?
-                            Row(
+                              Row(
                               children: [
                                 SizedBox(width: 140.w,),
                                 SizedBox(
                                   height: 30,
-                                  child: ElevatedButton(
+                                  child: isLoading&& selectedIndex1==index ? Container(decoration: BoxDecoration(
+                                      border: Border.all(color: colors.green),
+                                      borderRadius: BorderRadius.circular(10)
+                                  ),
+                                    width: 80,
+                                    child: Center(child: Container(
+                                        width: 17,height: 17,
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 2,
+                                          color: colors.green,
+                                        )),),
+                                  ) : ElevatedButton(
                                       onPressed: () {
                                         addFriend("${snapshot.data!.response[index].senderId}", 1);
+                                        setState(() {
+                                          isLoading = true;
+                                          selectedIndex1=index;
+                                        });
                                         setState(() {
 
                                         });
@@ -113,10 +131,23 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                 SizedBox(
                                   height: 30,
 
-                                  child: ElevatedButton(
+                                  child: isLoading&& selectedIndex==index ? Container(decoration: BoxDecoration(
+                                    border: Border.all(color: colors.red),
+                                    borderRadius: BorderRadius.circular(10)
+                                  ),
+                                    width: 80,
+                                    child: Center(child: Container(
+                                        width: 17,height: 17,
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 2,
+                                          color: colors.red,
+                                        )),),
+                                  ) : ElevatedButton(
                                       onPressed: () {
                                         addFriend("${snapshot.data!.response[index].senderId}", 2);
                                         setState(() {
+                                          isLoading = true;
+                                          selectedIndex=index;
 
                                         });
                                       },

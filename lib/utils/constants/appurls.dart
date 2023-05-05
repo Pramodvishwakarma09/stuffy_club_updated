@@ -1,6 +1,13 @@
 class AppUrl{
-  static const String baseUrl = "http://159.89.248.34:3000";
+
+    // home page
   static const String homePage = "$baseUrl/homePage";
+
+
+
+
+
+  static const String baseUrl = "http://159.89.248.34:3000";
   static const String signUpUser = "$baseUrl/signUp";
   static const String loginUser = "$baseUrl/login";
   static const String myProfile = "$baseUrl/myprofile";
@@ -8,7 +15,6 @@ class AppUrl{
   static const String addCategory = "$baseUrl/addCategory";
   static const String updatePlan = "$baseUrl/updateplan";
   static const String getProduct = "$baseUrl/getProducts";
-
   static const String get_all_friends = "$baseUrl/get_all_friends";
 
   static const String getProductsbyid = "$baseUrl/getProductsbyid";
@@ -26,16 +32,11 @@ class AppUrl{
   static const String getallnotification = "$baseUrl/getallnotification";
   static const String getgallery = "$baseUrl/getgallery";
   static const String addsprite = "$baseUrl/addsprite";
-
   static const String friend_request = "$baseUrl/friend_request";
   static const String add_friend = "$baseUrl/add_friend";
-
-
   static const String get_my_friend = "$baseUrl/get_my_friend";
   static const String update_sprites = "$baseUrl/update_sprites";
   static const String getsprites = "$baseUrl/getsprites";
   static const String get_share_gallery = "$baseUrl/get_share_gallery";
   static const String share_my_gallery = "$baseUrl/share_my_gallery";
-
-
 }

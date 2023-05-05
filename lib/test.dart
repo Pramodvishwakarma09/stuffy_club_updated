@@ -14,11 +14,11 @@ class _ImageUploadPageState extends State<ImageUploadPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Notification Badge"),
+        title: const Text("Notification Badge"),
         actions: <Widget>[
            Stack(
             children: <Widget>[
-               IconButton(icon: Icon(Icons.notifications), onPressed: () {
+               IconButton(icon: const Icon(Icons.notifications), onPressed: () {
                 setState(() {
                   counter = 0;
                 });
@@ -26,19 +26,19 @@ class _ImageUploadPageState extends State<ImageUploadPage> {
               counter != 0 ?  Positioned(
                 right: 11,
                 top: 11,
-                child: new Container(
-                  padding: EdgeInsets.all(2),
-                  decoration: new BoxDecoration(
+                child: Container(
+                  padding: const EdgeInsets.all(2),
+                  decoration: BoxDecoration(
                     color: Colors.red,
                     borderRadius: BorderRadius.circular(6),
                   ),
-                  constraints: BoxConstraints(
+                  constraints: const BoxConstraints(
                     minWidth: 14,
                     minHeight: 14,
                   ),
                   child: Text(
                     '$counter',
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 8,
                     ),
@@ -55,7 +55,7 @@ class _ImageUploadPageState extends State<ImageUploadPage> {
         setState(() {
           counter++;
         });
-      }, child: Icon(Icons.add),),
+      }, child: const Icon(Icons.add),),
     );
   }
 }

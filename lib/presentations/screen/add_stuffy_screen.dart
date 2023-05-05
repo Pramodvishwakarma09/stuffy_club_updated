@@ -30,11 +30,8 @@ class _AddStuffyScreenState extends State<AddStuffyScreen> {
       if (pickedfiles != null) {
         imagefiles = pickedfiles;
         setState(() {});
-      } else {
-      }
-    } catch (e) {
-
-    }
+      } else {}
+    } catch (e) {}
   }
 
   final TextEditingController Stuffy_Name = TextEditingController();
@@ -62,7 +59,6 @@ class _AddStuffyScreenState extends State<AddStuffyScreen> {
     for (var file in imagefiles!) {
       String fileName = file.path.split("/").last;
       var stream = http.ByteStream(DelegatingStream.typed(file.openRead()));
-
 
       var length = await file.length(); //imageFile is your image file
 
@@ -92,7 +88,6 @@ class _AddStuffyScreenState extends State<AddStuffyScreen> {
               MaterialPageRoute(
                 builder: (context) => DashBoardPage(),
               ));
-
         } catch (e) {}
       });
     });
@@ -219,11 +214,9 @@ class _AddStuffyScreenState extends State<AddStuffyScreen> {
                           elevation: 16,
                           style: TextStyle(fontWeight: FontWeight.bold),
                           underline: Container(
-                            // height: 2,
                             color: Colors.black54,
                           ),
                           onChanged: (String? value) {
-                            // This is called when the user selects an item.
                             setState(() {
                               dropdownValue = value!;
                             });
@@ -240,13 +233,7 @@ class _AddStuffyScreenState extends State<AddStuffyScreen> {
                           }).toList(),
                         ),
                       ),
-                    )
-                    // : Text("Job Type",
-                    // style: TextStyle(
-                    //   fontSize: 12,
-                    //   color: Theme.of(context).colorScheme.fontClr
-                    // ),),
-                    ),
+                    )),
               ),
               SizedBox(height: 1),
               Container(
@@ -356,16 +343,11 @@ class _AddStuffyScreenState extends State<AddStuffyScreen> {
                         Fluttertoast.showToast(
                           msg: "Image is Requried",
                           toastLength: Toast.LENGTH_LONG,
-                          //duration
                           gravity: ToastGravity.BOTTOM,
-                          //location
                           timeInSecForIosWeb: 1,
                           backgroundColor: colors.primary,
-                          //background color
                           textColor: Colors.white,
-                          //text Color
                           fontSize: 16.0,
-                          //font size
                         );
                       } else {
                         uploadImage(context);
